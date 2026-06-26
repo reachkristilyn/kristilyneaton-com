@@ -14,7 +14,8 @@
   --sans:     'Inter', system-ui, sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overscroll-behavior: none; }
+body { overscroll-behavior: none; }
 
 body {
   background: var(--cream);
@@ -23,8 +24,9 @@ body {
   font-size: 16px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  padding-top: 5rem;
+  overscroll-behavior: none;
 }
-
 /* ── NAV ── */
 nav {
   position: fixed;
@@ -67,7 +69,7 @@ nav {
 .nav-links a.active { color: var(--forest); }
 
 /* ── LAYOUT ── */
-main { padding-top: 5rem; }
+main { padding-top: 0; }
 
 .container {
   max-width: 1100px;
