@@ -154,7 +154,8 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 
 .hero h1 em {
   font-style: italic;
-  color: var(--forest);
+  color: var(--forest)
+   white-space: nowrap;
 }
 
 .hero-tagline {
