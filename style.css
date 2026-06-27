@@ -673,7 +673,7 @@ footer {
 .feature-row.flip > * { direction: ltr; }
 
 .feature-image {
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
   border-radius: 4px;
   display: flex;
   align-items: center;
