@@ -225,7 +225,8 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
   padding: 2.5rem;
   width: 100%;
   max-width: 360px;
-  align-self: center; 
+  align-self: center;
+  margin-top: 4rem; 
 }
 
 .hero-card-label {
