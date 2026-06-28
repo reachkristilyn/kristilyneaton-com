@@ -3,10 +3,10 @@
   const path = window.location.pathname.split('/').pop() || 'index.html';
   const pages = [
     { href: 'index.html',     label: 'Home' },
-    { href: 'books.html',     label: 'Books' },
-    { href: 'technology.html',label: 'Technology' },
-    { href: 'impact.html',    label: 'Impact' },
     { href: 'about.html',     label: 'About' },
+    { href: 'impact.html',    label: 'Impact' },
+    { href: 'technology.html',label: 'Technology' },
+    { href: 'books.html',     label: 'Books' },
     { href: 'press.html',     label: 'Conversations' },
     { href: 'contact.html',   label: 'Contact' },
   ];
