@@ -731,7 +731,7 @@ footer {
     height: auto;
     min-height: 0;
     align-items: flex-start;
-    padding-bottom: 2rem;
+    padding-bottom: 0.5rem;
   }
 
   .hero-card {
