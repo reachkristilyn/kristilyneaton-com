@@ -7,7 +7,6 @@
     { href: 'impact.html',    label: 'Experience + Impact' },
     { href: 'technology.html',label: 'Technology' },
     { href: 'books.html',     label: 'Books' },
-    { href: 'press.html',     label: 'Conversations' },
     { href: 'contact.html',   label: 'Contact' },
   ];
   const navHTML = `
