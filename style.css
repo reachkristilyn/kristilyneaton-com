@@ -108,7 +108,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 .section-body {
   font-size: 1.05rem;
   color: var(--mid);
-  max-width: 580px;
+  max-width: 700px;
   line-height: 1.8;
 }
 
