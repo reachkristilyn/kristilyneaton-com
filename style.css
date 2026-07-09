@@ -8,7 +8,7 @@
   --terra:    #982A65;
   --sage:     #8FAF8A;
   --ink:      #141414;
-  --mid:      #6B7068;
+  --mid:      #53564E;
   --border:   #E2E2DC;
   --serif:    'DM Serif Display', Georgia, serif;
   --sans:     'Inter', system-ui, sans-serif;
@@ -235,7 +235,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 }
 
 .hero-card-label {
-  font-size: 0.65rem;
+  font-size: 0.80rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -302,7 +302,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 .btn-outline:hover { background: var(--forest); color: var(--cream); }
 
 .btn-terra { background: var(--terra); color: white; }
-.btn-terra:hover { background: #b0603b; }
+.btn-terra:hover { background: #7A2251; }
 
 /* ── CARDS ── */
 .card {
@@ -332,7 +332,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 
 .card-tag {
   display: inline-block;
-  font-size: 0.65rem;
+  font-size: 0.80rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -375,7 +375,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 .book-info { padding: 1.75rem; }
 
 .book-status {
-  font-size: 0.65rem;
+  font-size:.80rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -592,8 +592,11 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 
 .form-group input:focus,
 .form-group textarea:focus,
-.form-group select:focus { border-color: var(--forest); }
-
+.form-group select:focus {
+  border-color: var(--forest);
+  outline: 2px solid var(--forest);
+  outline-offset: 2px;
+}
 .form-group textarea { resize: vertical; min-height: 140px; }
 
 .contact-info-block {
@@ -675,8 +678,7 @@ footer {
   align-items: center;
 }
 
-.feature-row.flip { direction: rtl; }
-.feature-row.flip > * { direction: ltr; }
+.feature-row.flip > *:first-child { order: 2; }
 
 .feature-image {
   aspect-ratio: 16/9;
@@ -761,4 +763,8 @@ footer {
   .hero-cta { display: block; text-align: center; flex: 1 1 100%; }
 
   .book-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
 }
