@@ -41,6 +41,11 @@
       btn.textContent = '☰';
     });
   });
+  const favicon = document.createElement('link');
+  favicon.rel = 'icon';
+  favicon.href = '/favicon.png';
+  document.head.appendChild(favicon);
+
   const style = document.createElement('style');
   style.textContent = `
     .nav-links.open {
