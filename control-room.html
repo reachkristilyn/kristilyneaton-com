@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Control Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#234b38;
+    --forest-deep:#152e21;
+    --blush:#e9b9ac;
+    --blush-soft:#f7ebe6;
+    --cream:#faf7f2;
+    --ink:#1d1f1c;
+    --line:#e3ddd3;
+    --white:#ffffff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.5;
+    min-height:100vh;
+  }
+  .skip-link{
+    position:absolute;left:-9999px;top:0;background:var(--forest);color:var(--white);
+    padding:.6rem 1rem;border-radius:0 0 var(--radius) 0;z-index:50;
+  }
+  .skip-link:focus{left:0}
+  h1,h2{font-family:'DM Serif Display',Georgia,serif;font-weight:400}
+  button{font-family:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--forest);outline-offset:2px;border-radius:4px}
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--forest);
+    color:var(--cream);
+    padding:2rem 1.5rem 4.5rem;
+  }
+  .header-inner{max-width:1060px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between}
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--blush);font-weight:600;margin-bottom:.35rem;
+  }
+  h1{font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.1}
+  .header-date{font-size:.95rem;color:#cfe0d5}
+  .streak-pill{
+    background:var(--forest-deep);border:1px solid rgba(233,185,172,.35);
+    color:var(--blush);padding:.5rem .9rem;border-radius:999px;
+    font-size:.82rem;font-weight:600;white-space:nowrap;
+  }
+
+  /* ---------- Layout ---------- */
+  main{max-width:1060px;margin:-3rem auto 0;padding:0 1.5rem 4rem;display:grid;gap:1.25rem;grid-template-columns:1fr 1fr}
+  @media(max-width:840px){main{grid-template-columns:1fr}}
+  .card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:1.4rem;box-shadow:0 2px 10px rgba(29,31,28,.05);
+  }
+  .card h2{font-size:1.35rem;margin-bottom:.9rem;color:var(--forest)}
+  .span-2{grid-column:1 / -1}
+  .hint{font-size:.8rem;color:#6f7a72}
+
+  /* ---------- Capture bar ---------- */
+  .capture{display:flex;gap:.6rem}
+  .capture input{
+    flex:1;padding:.85rem 1rem;border:1.5px solid var(--line);border-radius:10px;
+    font-family:inherit;font-size:1rem;background:var(--cream);
+  }
+  .capture input:focus{border-color:var(--forest);outline:none}
+  .btn{
+    background:var(--forest);color:var(--white);border:none;border-radius:10px;
+    padding:.85rem 1.3rem;font-size:.92rem;font-weight:600;
+    transition:background .15s;
+  }
+  .btn:hover{background:var(--forest-deep)}
+  .btn-soft{
+    background:var(--blush-soft);color:var(--forest);border:1px solid var(--blush);
+    border-radius:10px;padding:.55rem 1rem;font-size:.85rem;font-weight:600;
+  }
+  .btn-soft:hover{background:var(--blush)}
+
+  /* ---------- Tasks ---------- */
+  ul.tasks{list-style:none;margin-top:1rem;display:grid;gap:.5rem}
+  .task{
+    display:flex;align-items:center;gap:.7rem;padding:.65rem .8rem;
+    background:var(--cream);border:1px solid var(--line);border-radius:10px;
+  }
+  .task.starred{border-color:var(--blush);background:var(--blush-soft)}
+  .task.done .task-text{text-decoration:line-through;color:#8b948d}
+  .task input[type=checkbox]{width:1.2rem;height:1.2rem;accent-color:var(--forest);flex-shrink:0}
+  .task-text{flex:1;font-size:.95rem;word-break:break-word}
+  .icon-btn{
+    background:none;border:none;font-size:1rem;line-height:1;padding:.3rem;
+    color:#9aa39c;border-radius:6px;flex-shrink:0;
+  }
+  .icon-btn:hover{color:var(--forest)}
+  .icon-btn.on{color:#c98a2e}
+  .empty{padding:1.2rem;text-align:center;color:#8b948d;font-size:.9rem;background:var(--cream);border:1.5px dashed var(--line);border-radius:10px;margin-top:1rem}
+
+  /* ---------- Timer ---------- */
+  .timer-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem}
+  .ring-box{position:relative;width:190px;height:190px}
+  .ring-box svg{transform:rotate(-90deg)}
+  .ring-bg{fill:none;stroke:var(--blush-soft);stroke-width:11}
+  .ring-fg{fill:none;stroke:var(--forest);stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset .4s linear}
+  .ring-label{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .ring-time{font-family:'DM Serif Display',Georgia,serif;font-size:2.4rem;color:var(--forest)}
+  .ring-mode{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#6f7a72;font-weight:600}
+  .timer-controls{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+  .sessions{font-size:.85rem;color:#6f7a72}
+  .sessions strong{color:var(--forest)}
+
+  /* ---------- Energy ---------- */
+  .energy-row{display:flex;gap:.5rem;margin-bottom:1rem}
+  .energy-btn{
+    flex:1;padding:.7rem 0;border:1.5px solid var(--line);background:var(--cream);
+    border-radius:10px;font-size:1.05rem;font-weight:600;color:#6f7a72;
+  }
+  .energy-btn[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:var(--white)}
+  .spark{display:flex;align-items:flex-end;gap:4px;height:56px;margin-top:.4rem}
+  .spark-bar{flex:1;background:var(--blush);border-radius:3px 3px 0 0;min-height:4px}
+  .spark-bar.today-bar{background:var(--forest)}
+  .spark-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#9aa39c;margin-top:.3rem}
+
+  /* ---------- Habits ---------- */
+  .habit-row{
+    display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;margin-bottom:.5rem;
+    background:var(--cream);border:1px solid var(--line);border-radius:10px;
+  }
+  .habit-row input[type=checkbox]{width:1.2rem;height:1.2rem;accent-color:var(--forest)}
+  .habit-name{flex:1;font-size:.95rem}
+  .habit-streak{font-size:.78rem;font-weight:600;color:var(--forest);background:var(--blush-soft);border:1px solid var(--blush);padding:.15rem .55rem;border-radius:999px;white-space:nowrap}
+  .habit-add{display:flex;gap:.6rem;margin-top:.8rem}
+  .habit-add input{flex:1;padding:.65rem .9rem;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;background:var(--cream)}
+  .habit-add input:focus{border-color:var(--forest);outline:none}
+
+  /* ---------- Brain dump ---------- */
+  textarea{
+    width:100%;min-height:150px;padding:.9rem 1rem;border:1.5px solid var(--line);
+    border-radius:10px;font-family:inherit;font-size:.95rem;background:var(--cream);resize:vertical;
+  }
+  textarea:focus{border-color:var(--forest);outline:none}
+  .saved-flash{font-size:.78rem;color:var(--forest);font-weight:600;margin-top:.4rem;opacity:0;transition:opacity .3s}
+  .saved-flash.show{opacity:1}
+
+  /* ---------- Footer / data ---------- */
+  .data-bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:.4rem}
+  footer{max-width:1060px;margin:0 auto;padding:0 1.5rem 3rem;font-size:.8rem;color:#8b948d}
+
+  .visually-hidden{
+    position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <p class="eyebrow">Kristi's control room</p>
+      <h1 id="greeting">Today</h1>
+      <p class="header-date" id="header-date"></p>
+    </div>
+    <div class="streak-pill" id="focus-pill">0 focus sessions today</div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Quick capture -->
+  <section class="card span-2" aria-labelledby="cap-h">
+    <h2 id="cap-h">Catch it before it escapes</h2>
+    <div class="capture">
+      <label class="visually-hidden" for="task-input">New task</label>
+      <input type="text" id="task-input" placeholder="Type a task and press Enter" autocomplete="off">
+      <button class="btn" id="task-add">Add task</button>
+    </div>
+    <ul class="tasks" id="task-list"></ul>
+    <div class="empty" id="task-empty">Nothing captured yet. That is either impressive or suspicious.</div>
+    <p class="hint" style="margin-top:.7rem">Star up to three tasks to mark today's priorities. Starred tasks float to the top.</p>
+  </section>
+
+  <!-- Focus timer -->
+  <section class="card" aria-labelledby="timer-h">
+    <h2 id="timer-h">Focus timer</h2>
+    <div class="timer-wrap">
+      <div class="ring-box">
+        <svg width="190" height="190" viewBox="0 0 190 190" aria-hidden="true">
+          <circle class="ring-bg" cx="95" cy="95" r="84"></circle>
+          <circle class="ring-fg" id="ring" cx="95" cy="95" r="84"></circle>
+        </svg>
+        <div class="ring-label">
+          <span class="ring-time" id="ring-time">25:00</span>
+          <span class="ring-mode" id="ring-mode">Focus</span>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="btn" id="timer-toggle">Start</button>
+        <button class="btn-soft" id="timer-reset">Reset</button>
+        <button class="btn-soft" id="timer-mode">Switch to break</button>
+      </div>
+      <p class="sessions">Completed today: <strong id="session-count">0</strong></p>
+      <div aria-live="polite" class="visually-hidden" id="timer-live"></div>
+    </div>
+  </section>
+
+  <!-- Energy -->
+  <section class="card" aria-labelledby="energy-h">
+    <h2 id="energy-h">Energy check</h2>
+    <p class="hint" style="margin-bottom:.7rem">How is the battery right now, 1 to 5?</p>
+    <div class="energy-row" role="group" aria-label="Energy level today">
+      <button class="energy-btn" data-level="1" aria-pressed="false">1</button>
+      <button class="energy-btn" data-level="2" aria-pressed="false">2</button>
+      <button class="energy-btn" data-level="3" aria-pressed="false">3</button>
+      <button class="energy-btn" data-level="4" aria-pressed="false">4</button>
+      <button class="energy-btn" data-level="5" aria-pressed="false">5</button>
+    </div>
+    <div class="spark" id="spark" aria-label="Energy over the last 14 days" role="img"></div>
+    <div class="spark-labels"><span>14 days ago</span><span>today</span></div>
+  </section>
+
+  <!-- Habits -->
+  <section class="card" aria-labelledby="habit-h">
+    <h2 id="habit-h">Habits</h2>
+    <div id="habit-list"></div>
+    <div class="empty" id="habit-empty">No habits yet. Add one below to start a streak.</div>
+    <div class="habit-add">
+      <label class="visually-hidden" for="habit-input">New habit</label>
+      <input type="text" id="habit-input" placeholder="e.g. Meds, water, 10 min walk" autocomplete="off">
+      <button class="btn-soft" id="habit-add-btn">Add</button>
+    </div>
+  </section>
+
+  <!-- Brain dump -->
+  <section class="card" aria-labelledby="dump-h">
+    <h2 id="dump-h">Brain dump</h2>
+    <p class="hint" style="margin-bottom:.7rem">Park anything here so it stops looping. Saves as you type.</p>
+    <label class="visually-hidden" for="dump">Brain dump notes</label>
+    <textarea id="dump" placeholder="Loose thoughts, ideas, worries, that thing you keep almost forgetting..."></textarea>
+    <p class="saved-flash" id="dump-saved">Saved</p>
+  </section>
+
+  <!-- Data -->
+  <section class="card span-2" aria-labelledby="data-h">
+    <h2 id="data-h">Your data</h2>
+    <p class="hint">Everything lives in this browser only. Nothing is sent anywhere. Export a backup now and then, since clearing browser data would erase it.</p>
+    <div class="data-bar">
+      <button class="btn-soft" id="export-btn">Export backup (.json)</button>
+      <button class="btn-soft" id="import-btn">Import backup</button>
+      <input type="file" id="import-file" accept="application/json" class="visually-hidden">
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Control Room, a private admin page for kristilyneaton.com. Offline, local, yours.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "kle-control-room-v1";
+
+  function todayKey(d){
+    d = d || new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear() + "-" + m + "-" + day;
+  }
+
+  var state = load();
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw) return JSON.parse(raw);
+    }catch(e){}
+    return { tasks:[], habits:[], habitLog:{}, energy:{}, dump:"", sessions:{} };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }
+    catch(e){ console.warn("Could not save", e); }
+  }
+
+  /* ---------- Header ---------- */
+  var now = new Date();
+  var hours = now.getHours();
+  var greet = hours < 12 ? "Good morning" : hours < 17 ? "Good afternoon" : "Good evening";
+  document.getElementById("greeting").textContent = greet + ", Kristi";
+  document.getElementById("header-date").textContent = now.toLocaleDateString(undefined,
+    { weekday:"long", month:"long", day:"numeric", year:"numeric" });
+
+  /* ---------- Tasks ---------- */
+  var taskInput = document.getElementById("task-input");
+  var taskList = document.getElementById("task-list");
+  var taskEmpty = document.getElementById("task-empty");
+
+  function addTask(){
+    var text = taskInput.value.trim();
+    if(!text) return;
+    state.tasks.push({ id: Date.now() + Math.random(), text: text, done:false, starred:false });
+    taskInput.value = "";
+    save(); renderTasks();
+    taskInput.focus();
+  }
+  document.getElementById("task-add").addEventListener("click", addTask);
+  taskInput.addEventListener("keydown", function(e){ if(e.key === "Enter") addTask(); });
+
+  function renderTasks(){
+    taskList.innerHTML = "";
+    var sorted = state.tasks.slice().sort(function(a,b){
+      if(a.done !== b.done) return a.done ? 1 : -1;
+      if(a.starred !== b.starred) return a.starred ? -1 : 1;
+      return 0;
+    });
+    taskEmpty.style.display = sorted.length ? "none" : "block";
+    sorted.forEach(function(t){
+      var li = document.createElement("li");
+      li.className = "task" + (t.done ? " done" : "") + (t.starred ? " starred" : "");
+
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = t.done;
+      cb.setAttribute("aria-label", "Mark done: " + t.text);
+      cb.addEventListener("change", function(){ t.done = cb.checked; save(); renderTasks(); });
+
+      var span = document.createElement("span");
+      span.className = "task-text";
+      span.textContent = t.text;
+
+      var star = document.createElement("button");
+      star.className = "icon-btn" + (t.starred ? " on" : "");
+      star.textContent = t.starred ? "\u2605" : "\u2606";
+      star.setAttribute("aria-label", (t.starred ? "Unstar: " : "Star as priority: ") + t.text);
+      star.addEventListener("click", function(){
+        if(!t.starred){
+          var count = state.tasks.filter(function(x){ return x.starred && !x.done; }).length;
+          if(count >= 3){ alert("Three priorities max. Unstar one first."); return; }
+        }
+        t.starred = !t.starred; save(); renderTasks();
+      });
+
+      var del = document.createElement("button");
+      del.className = "icon-btn";
+      del.textContent = "\u00d7";
+      del.setAttribute("aria-label", "Delete: " + t.text);
+      del.addEventListener("click", function(){
+        state.tasks = state.tasks.filter(function(x){ return x.id !== t.id; });
+        save(); renderTasks();
+      });
+
+      li.appendChild(cb); li.appendChild(span); li.appendChild(star); li.appendChild(del);
+      taskList.appendChild(li);
+    });
+  }
+
+  /* ---------- Timer ---------- */
+  var FOCUS = 25*60, BREAK = 5*60;
+  var mode = "focus", remaining = FOCUS, running = false, tick = null;
+  var ring = document.getElementById("ring");
+  var circumference = 2 * Math.PI * 84;
+  ring.style.strokeDasharray = circumference;
+  ring.style.strokeDashoffset = 0;
+
+  var ringTime = document.getElementById("ring-time");
+  var ringMode = document.getElementById("ring-mode");
+  var toggleBtn = document.getElementById("timer-toggle");
+  var modeBtn = document.getElementById("timer-mode");
+  var live = document.getElementById("timer-live");
+  var sessionCountEl = document.getElementById("session-count");
+  var focusPill = document.getElementById("focus-pill");
+
+  function fmt(s){
+    var m = Math.floor(s/60), r = s % 60;
+    return String(m).padStart(2,"0") + ":" + String(r).padStart(2,"0");
+  }
+  function totalFor(m){ return m === "focus" ? FOCUS : BREAK; }
+  function drawTimer(){
+    ringTime.textContent = fmt(remaining);
+    ringMode.textContent = mode === "focus" ? "Focus" : "Break";
+    var frac = remaining / totalFor(mode);
+    ring.style.strokeDashoffset = circumference * (1 - frac);
+  }
+  function updateSessions(){
+    var n = state.sessions[todayKey()] || 0;
+    sessionCountEl.textContent = n;
+    focusPill.textContent = n + " focus session" + (n === 1 ? "" : "s") + " today";
+  }
+  function beep(){
+    try{
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = 660; g.gain.value = 0.08;
+      o.start();
+      setTimeout(function(){ o.stop(); ctx.close(); }, 450);
+    }catch(e){}
+  }
+  function finish(){
+    running = false;
+    clearInterval(tick);
+    beep();
+    if(mode === "focus"){
+      var k = todayKey();
+      state.sessions[k] = (state.sessions[k] || 0) + 1;
+      save(); updateSessions();
+      live.textContent = "Focus session complete. Time for a break.";
+      mode = "break";
+    } else {
+      live.textContent = "Break over. Ready for another focus round.";
+      mode = "focus";
+    }
+    remaining = totalFor(mode);
+    toggleBtn.textContent = "Start";
+    modeBtn.textContent = mode === "focus" ? "Switch to break" : "Switch to focus";
+    drawTimer();
+  }
+  function toggleTimer(){
+    if(running){
+      running = false; clearInterval(tick);
+      toggleBtn.textContent = "Resume";
+      live.textContent = "Timer paused.";
+    } else {
+      running = true;
+      toggleBtn.textContent = "Pause";
+      live.textContent = (mode === "focus" ? "Focus" : "Break") + " timer started.";
+      tick = setInterval(function(){
+        remaining--;
+        if(remaining <= 0){ remaining = 0; drawTimer(); finish(); return; }
+        drawTimer();
+      }, 1000);
+    }
+  }
+  toggleBtn.addEventListener("click", toggleTimer);
+  document.getElementById("timer-reset").addEventListener("click", function(){
+    running = false; clearInterval(tick);
+    remaining = totalFor(mode);
+    toggleBtn.textContent = "Start";
+    drawTimer();
+    live.textContent = "Timer reset.";
+  });
+  modeBtn.addEventListener("click", function(){
+    running = false; clearInterval(tick);
+    mode = mode === "focus" ? "break" : "focus";
+    remaining = totalFor(mode);
+    toggleBtn.textContent = "Start";
+    modeBtn.textContent = mode === "focus" ? "Switch to break" : "Switch to focus";
+    drawTimer();
+  });
+
+  /* ---------- Energy ---------- */
+  var energyBtns = document.querySelectorAll(".energy-btn");
+  function renderEnergy(){
+    var today = state.energy[todayKey()];
+    energyBtns.forEach(function(b){
+      b.setAttribute("aria-pressed", String(Number(b.dataset.level) === today));
+    });
+    var spark = document.getElementById("spark");
+    spark.innerHTML = "";
+    for(var i = 13; i >= 0; i--){
+      var d = new Date(); d.setDate(d.getDate() - i);
+      var v = state.energy[todayKey(d)] || 0;
+      var bar = document.createElement("div");
+      bar.className = "spark-bar" + (i === 0 ? " today-bar" : "");
+      bar.style.height = v ? (v * 20) + "%" : "4px";
+      bar.title = todayKey(d) + (v ? ": " + v + "/5" : ": no entry");
+      spark.appendChild(bar);
+    }
+  }
+  energyBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      var lvl = Number(b.dataset.level);
+      var k = todayKey();
+      state.energy[k] = state.energy[k] === lvl ? undefined : lvl;
+      if(state.energy[k] === undefined) delete state.energy[k];
+      save(); renderEnergy();
+    });
+  });
+
+  /* ---------- Habits ---------- */
+  var habitList = document.getElementById("habit-list");
+  var habitEmpty = document.getElementById("habit-empty");
+  var habitInput = document.getElementById("habit-input");
+
+  function streakFor(id){
+    var n = 0;
+    var d = new Date();
+    var todayDone = (state.habitLog[todayKey(d)] || []).indexOf(id) !== -1;
+    if(!todayDone) d.setDate(d.getDate() - 1);
+    while(true){
+      var log = state.habitLog[todayKey(d)] || [];
+      if(log.indexOf(id) === -1) break;
+      n++;
+      d.setDate(d.getDate() - 1);
+    }
+    return n;
+  }
+  function renderHabits(){
+    habitList.innerHTML = "";
+    habitEmpty.style.display = state.habits.length ? "none" : "block";
+    var todayLog = state.habitLog[todayKey()] || [];
+    state.habits.forEach(function(h){
+      var row = document.createElement("div");
+      row.className = "habit-row";
+
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = todayLog.indexOf(h.id) !== -1;
+      cb.setAttribute("aria-label", "Done today: " + h.name);
+      cb.addEventListener("change", function(){
+        var k = todayKey();
+        var log = state.habitLog[k] || [];
+        if(cb.checked){ if(log.indexOf(h.id) === -1) log.push(h.id); }
+        else { log = log.filter(function(x){ return x !== h.id; }); }
+        state.habitLog[k] = log;
+        save(); renderHabits();
+      });
+
+      var name = document.createElement("span");
+      name.className = "habit-name";
+      name.textContent = h.name;
+
+      var streak = document.createElement("span");
+      streak.className = "habit-streak";
+      var s = streakFor(h.id);
+      streak.textContent = s + " day" + (s === 1 ? "" : "s");
+
+      var del = document.createElement("button");
+      del.className = "icon-btn";
+      del.textContent = "\u00d7";
+      del.setAttribute("aria-label", "Delete habit: " + h.name);
+      del.addEventListener("click", function(){
+        if(!confirm("Delete habit \"" + h.name + "\" and its history?")) return;
+        state.habits = state.habits.filter(function(x){ return x.id !== h.id; });
+        Object.keys(state.habitLog).forEach(function(k){
+          state.habitLog[k] = state.habitLog[k].filter(function(x){ return x !== h.id; });
+        });
+        save(); renderHabits();
+      });
+
+      row.appendChild(cb); row.appendChild(name); row.appendChild(streak); row.appendChild(del);
+      habitList.appendChild(row);
+    });
+  }
+  function addHabit(){
+    var name = habitInput.value.trim();
+    if(!name) return;
+    state.habits.push({ id: "h" + Date.now(), name: name });
+    habitInput.value = "";
+    save(); renderHabits();
+    habitInput.focus();
+  }
+  document.getElementById("habit-add-btn").addEventListener("click", addHabit);
+  habitInput.addEventListener("keydown", function(e){ if(e.key === "Enter") addHabit(); });
+
+  /* ---------- Brain dump ---------- */
+  var dump = document.getElementById("dump");
+  var dumpSaved = document.getElementById("dump-saved");
+  dump.value = state.dump || "";
+  var dumpTimer = null;
+  dump.addEventListener("input", function(){
+    clearTimeout(dumpTimer);
+    dumpTimer = setTimeout(function(){
+      state.dump = dump.value;
+      save();
+      dumpSaved.classList.add("show");
+      setTimeout(function(){ dumpSaved.classList.remove("show"); }, 1200);
+    }, 500);
+  });
+
+  /* ---------- Export / import ---------- */
+  document.getElementById("export-btn").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(state, null, 2)], { type:"application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "control-room-backup-" + todayKey() + ".json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  var importFile = document.getElementById("import-file");
+  document.getElementById("import-btn").addEventListener("click", function(){ importFile.click(); });
+  importFile.addEventListener("change", function(){
+    var f = importFile.files[0];
+    if(!f) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var data = JSON.parse(reader.result);
+        if(!data || typeof data !== "object" || !Array.isArray(data.tasks)) throw new Error("bad shape");
+        state = Object.assign({ tasks:[], habits:[], habitLog:{}, energy:{}, dump:"", sessions:{} }, data);
+        save();
+        renderTasks(); renderHabits(); renderEnergy(); updateSessions();
+        dump.value = state.dump || "";
+        alert("Backup imported.");
+      }catch(e){
+        alert("That file could not be read as a Control Room backup.");
+      }
+    };
+    reader.readAsText(f);
+    importFile.value = "";
+  });
+
+  /* ---------- Init ---------- */
+  renderTasks();
+  renderHabits();
+  renderEnergy();
+  updateSessions();
+  drawTimer();
+})();
+</script>
+</body>
+</html>
