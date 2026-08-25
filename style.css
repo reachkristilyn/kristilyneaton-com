@@ -105,7 +105,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.15;
 }
 
 .section-title {
-  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
   color: var(--forest);
   margin-bottom: 1.25rem;
 }
@@ -694,7 +694,7 @@ footer {
 
 /* ── HOME PREVIEW STRIPS ── */
 .preview-strip {
-  background: white;
+  background: var(--cream);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 3.5rem 2.5rem;
