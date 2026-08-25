@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kristi Lyn Eaton</title>
+  <meta name="description" content="Author, technologist, experience designer, and disability advocate creating stories, experiences, and technology that make the world more inclusive.">
+  <meta property="og:image" content="https://www.kristilyneaton.com/galaxy_me.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:title" content="Kristi Lyn Eaton">
+  <meta property="og:description" content="Author, technologist, experience designer, and disability advocate.">
+  <meta property="og:url" content="https://www.kristilyneaton.com">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── HOME v2: full-bleed hero ── */
+    .home-hero {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 5rem);
+      min-height: 420px;
+      max-height: 780px;
+      overflow: hidden;
+      background: var(--forest);
+    }
+    .home-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .home-hero-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      text-align: center;
+      padding: 0 1.5rem 4rem;
+      background: linear-gradient(to top, rgba(20,20,20,0.55) 0%, rgba(20,20,20,0.15) 45%, rgba(20,20,20,0) 75%);
+    }
+    .home-hero-name {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.35);
+    }
+    .home-hero-tagline {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 1.75rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    }
+    .home-hero-cta {
+      display: inline-block;
+      background: rgba(255,255,255,0.95);
+      color: var(--forest);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.25rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .home-hero-cta:hover { background: var(--forest); color: var(--cream); }
+
+    /* ── HOME v2: tile grid ── */
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem;
+    }
+    .tile {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .tile-image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #F1F1EE;
+      border-radius: 2px;
+      margin-bottom: 1.1rem;
+    }
+    .tile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .tile-image { outline: 1px solid transparent; outline-offset: 0; transition: outline-color 0.2s, outline-offset 0.2s; }
+    .tile:hover .tile-image { outline-color: var(--terra); outline-offset: 4px; }    .tile-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .tile h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--forest);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+    .tile:hover h2 { color: var(--terra); }
+    .tile p {
+      font-size: 0.92rem;
+      color: var(--mid);
+      line-height: 1.7;
+      max-width: 42ch;
+    }
+    .tile-wide { grid-column: 1 / -1; }
+    .tile-wide .tile-image { aspect-ratio: 21/9; }
+    
+    
+    .tile-image video { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .tile-video { position: relative; background: #141414; }
+    .video-btn {
+      position: absolute; right: 1rem; bottom: 1rem;
+      width: 48px; height: 48px; border-radius: 50%; border: none;
+      background: rgba(250,250,247,0.9); color: var(--forest);
+      font-size: 1.3rem; line-height: 1; cursor: pointer;
+    }
+    .video-btn:hover { background: #fff; }
+    .video-btn:focus-visible { outline: 3px solid var(--terra); outline-offset: 3px; }
+    .tile-link { text-decoration: none; color: inherit; display: block; }
+    .tile-link:hover h2 { color: var(--terra); }
+
+
+
+    @media (max-width: 768px) {
+      .home-hero { height: 70vh; min-height: 360px; }
+      .home-hero-overlay { padding: 0 1.25rem 2.5rem; }
+      .tile-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 2.5rem 1.5rem;
+      }
+      .tile-wide .tile-image { aspect-ratio: 16/9; }
+
+    .tile-image video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tile:hover .tile-image { transition: none; }
+      .tile-image video { animation-play-state: paused; }
+    }
+  </style>
+</head>
+<body style="padding-top:5rem;">
+
+<main>
+
+  <!-- FULL-BLEED HERO -->
+  <div class="home-hero">
+    <img src="galaxy_me.png" alt="Kristi Lyn Eaton in double exposure with a NASA galaxy photo, two translucent versions of her merging into swirls of pink and teal starlight">
+    <div class="home-hero-overlay">
+      <h1 class="home-hero-name">Kristi Lyn Eaton</h1>
+      <p class="home-hero-tagline">Experience Designer &nbsp;•&nbsp; Program Leader &nbsp;•&nbsp; Technologist &nbsp;•&nbsp; Author</p>
+      <a href="impact.html" class="home-hero-cta">Explore work</a>
+    </div>
+  </div>
+
+  <!-- TILE GRID -->
+  <div class="tile-grid">
+
+    <a href="impact.html" class="tile">
+      <div class="tile-image">
+        <img src="skrillex_msg.webp" alt="">
+      </div>
+      <span class="tile-label">Experience + Impact</span>
+      <h2>Ideas are only as good as their execution.</h2>
+      <p>Two decades bringing complex projects to life across live events, nonprofit leadership, and community work.</p>
+    </a>
+
+    <a href="technology.html" class="tile">
+      <div class="tile-image">
+        <img src="Roar_Lab.jpeg" alt="">
+      </div>
+      <span class="tile-label">Technology</span>
+      <h2>Technology that expands what's possible.</h2>
+      <p>Research in robotics, AI, and accessibility.</p>
+    </a>
+
+    <a href="books.html" class="tile">
+      <div class="tile-image">
+        <img src="puzzcrop.png" alt="">
+      </div>
+      <span class="tile-label">Books</span>
+      <h2>Stories that spark curiosity.</h2>
+      <p>From woodland adventures and Japanese-inspired fantasy to literary fiction.</p>
+    </a>
+
+    <a href="no-rush-zone.html" class="tile">
+      <div class="tile-image">
+        <img src="yoga_tsq.jpeg" alt="">
+      </div>
+      <span class="tile-label">No Rush Zone</span>
+      <h2>A space for focus support.</h2>
+      <p>A quiet page for capturing tasks, timing focus sessions, and tracking habits. Free to use, no account needed. Everything stays in your own browser.</p>
+    </a>
+
+      <div class="tile">
+      <div class="tile-image tile-video">
+        <video id="about-video" src="/media/kepixel1.mov" poster="/media/kepixel.png" muted loop playsinline preload="metadata"></video>
+        <button type="button" class="video-btn" id="about-btn" aria-label="Play video">▶</button>
+      </div>
+      <a href="about.html" class="tile-link">
+        <span class="tile-label">About</span>
+        <h2>I like figuring things out.</h2>
+      </a>
+      <p>Especially where people, technology, creativity, and real-world problems meet.</p>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+  (function(){
+    var v = document.getElementById('about-video');
+    var b = document.getElementById('about-btn');
+    if(!v || !b) return;
+    b.addEventListener('click', function(){
+      if(v.paused){ v.play(); b.textContent='❚❚'; b.setAttribute('aria-label','Pause video'); }
+      else { v.pause(); b.textContent='▶'; b.setAttribute('aria-label','Play video'); }
+    });
+  })();
+</script>
+
+<script src="shared.js"></script>
+</body>
+</html>

@@ -2,7 +2,6 @@
 (function() {
   const path = window.location.pathname.split('/').pop() || 'index.html';
   const pages = [
-    { href: 'index.html',     label: 'Home' },
     { href: 'about.html',     label: 'About' },
     { href: 'impact.html',    label: 'Experience + Impact' },
     { href: 'technology.html',label: 'Technology' },
@@ -12,7 +11,7 @@
   ];
   const navHTML = `
     <nav>
-      <a href="index.html" class="nav-logo">Kristi Lyn Eaton</a>
+      <a href="index.html" class="nav-logo${path === 'index.html' ? ' active' : ''}">Kristi Lyn Eaton</a>
       <ul class="nav-links">
         ${pages.map(p => `<li><a href="${p.href}"${path === p.href ? ' class="active"' : ''}>${p.label}</a></li>`).join('')}
       </ul>
@@ -44,7 +43,7 @@
   });
   const favicon = document.createElement('link');
   favicon.rel = 'icon';
-  favicon.href = '/favicon.png';
+  favicon.href = '/media/favicon.png';
   document.head.appendChild(favicon);
 
   const style = document.createElement('style');

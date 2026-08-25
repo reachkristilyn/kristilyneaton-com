@@ -36,8 +36,8 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 3rem;
-  background: rgba(143,175,138,0.12);
-  backdrop-filter: blur(8px);
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 
@@ -67,6 +67,9 @@ nav {
 
 .nav-links a:hover,
 .nav-links a.active { color: var(--terra); font-weight: 600; }
+
+.nav-logo:hover,
+.nav-logo.active { color: var(--terra); }
 
 /* ── LAYOUT ── */
 main { padding-top: 0; }
