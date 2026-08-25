@@ -171,7 +171,7 @@
 <header>
   <div class="header-inner">
     <div>
-      <p class="eyebrow">Kristi's control room</p>
+      <p class="eyebrow">a safe space</p>
       <h1 id="greeting">Today</h1>
       <p class="header-date" id="header-date"></p>
     </div>
@@ -300,7 +300,7 @@
   var now = new Date();
   var hours = now.getHours();
   var greet = hours < 12 ? "Good morning" : hours < 17 ? "Good afternoon" : "Good evening";
-  document.getElementById("greeting").textContent = greet + ", Kristi";
+  document.getElementById("greeting").textContent = greet + ", bright light beam";
   document.getElementById("header-date").textContent = now.toLocaleDateString(undefined,
     { weekday:"long", month:"long", day:"numeric", year:"numeric" });
 
