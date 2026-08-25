@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Control Room</title>
+<title>No Rush Zone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -268,13 +268,13 @@
 </main>
 
 <footer>
-  <p>Control Room, a private admin page for kristilyneaton.com. Offline, local, yours.</p>
+  <p>no rush zone, a space for focus support</p>
 </footer>
 
 <script>
 (function(){
   "use strict";
-  var KEY = "kle-control-room-v1";
+  var KEY = "kle-no-rush-zone-v1";
 
   function todayKey(d){
     d = d || new Date();
@@ -299,8 +299,8 @@
   /* ---------- Header ---------- */
   var now = new Date();
   var hours = now.getHours();
-  var greet = hours < 12 ? "Good morning" : hours < 17 ? "Good afternoon" : "Good evening";
-  document.getElementById("greeting").textContent = greet + ", bright light beam";
+  var greet = hours < 12 ? "good morning" : hours < 17 ? "good afternoon" : "good evening";
+  document.getElementById("greeting").textContent = greet + ", perfect creature";
   document.getElementById("header-date").textContent = now.toLocaleDateString(undefined,
     { weekday:"long", month:"long", day:"numeric", year:"numeric" });
 
@@ -587,7 +587,7 @@
     var blob = new Blob([JSON.stringify(state, null, 2)], { type:"application/json" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "control-room-backup-" + todayKey() + ".json";
+    a.download = "no-rush-zone-backup-" + todayKey() + ".json";
     a.click();
     URL.revokeObjectURL(a.href);
   });
@@ -607,7 +607,7 @@
         dump.value = state.dump || "";
         alert("Backup imported.");
       }catch(e){
-        alert("That file could not be read as a Control Room backup.");
+        alert("That file could not be read as a No Rush Zone backup.");
       }
     };
     reader.readAsText(f);
