@@ -7,6 +7,7 @@
     { href: 'impact.html',    label: 'Experience + Impact' },
     { href: 'technology.html',label: 'Technology' },
     { href: 'books.html',     label: 'Books' },
+    { href: 'no-rush-zone.html', label: 'No Rush Zone' },
     { href: 'contact.html',   label: 'Contact' },
   ];
   const navHTML = `
