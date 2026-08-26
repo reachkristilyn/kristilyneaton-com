@@ -269,7 +269,7 @@
     <p class="hint" style="margin-bottom:.7rem">Park anything here so it stops looping. Saves as you type.</p>
     <label class="visually-hidden" for="dump">Brain dump notes</label>
     <textarea id="dump" placeholder="Loose thoughts, ideas, worries, that thing you keep almost forgetting..."></textarea>
-    <p class="saved-flash" id="dump-saved">Saved</p>
+    <p class="saved-flash" role="status" id="dump-saved"></p>  
   </section>
 
   <!-- Data -->
@@ -621,8 +621,12 @@
     dumpTimer = setTimeout(function(){
       state.dump = dump.value;
       save();
+      dumpSaved.textContent = "Saved";
       dumpSaved.classList.add("show");
-      setTimeout(function(){ dumpSaved.classList.remove("show"); }, 1200);
+      setTimeout(function(){
+        dumpSaved.classList.remove("show");
+        dumpSaved.textContent = "";
+      }, 1200);    
     }, 500);
   });
 
