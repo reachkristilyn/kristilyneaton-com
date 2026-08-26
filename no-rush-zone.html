@@ -203,7 +203,7 @@
     </div>
     <ul class="tasks" id="task-list"></ul>
     <div class="empty" id="task-empty">Nothing captured yet. That is either impressive or suspicious.</div>
-    <p class="hint" role="status" id="task-msg" style="margin-top:.7rem;min-height:1.2em"></p>
+    <p class="hint" role="status" id="task-msg" aria-label="Task notifications" style="margin-top:.7rem;min-height:1.2em"></p>    
     <p class="hint" style="margin-top:.7rem">Star up to three tasks to mark today's priorities. Starred tasks float to the top.</p>
   </section>
 
@@ -279,7 +279,8 @@
     <div class="data-bar">
       <button class="btn-soft" id="export-btn">Export backup (.json)</button>
       <button class="btn-soft" id="import-btn">Import backup</button>
-      <input type="file" id="import-file" accept="application/json" class="visually-hidden">
+      <label class="visually-hidden" for="import-file">Choose a backup file to import</label>
+      <input type="file" id="import-file" accept="application/json" class="visually-hidden">    
     </div>
   </section>
 
