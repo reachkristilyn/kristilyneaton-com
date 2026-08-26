@@ -355,7 +355,7 @@
         flag.textContent = " (priority)";
         span.appendChild(flag);
       }
-      
+
       var star = document.createElement("button");
       star.className = "icon-btn" + (t.starred ? " on" : "");
       star.textContent = t.starred ? "\u2605" : "\u2606";
@@ -511,8 +511,7 @@
       var td = document.createElement("td");
       td.textContent = v ? v + " out of 5" : "No entry";
       tr.appendChild(th); tr.appendChild(td);
-      tbody.appendChild(tr);
-    }    
+      tbody.appendChild(tr);   
     }
   }
   energyBtns.forEach(function(b){
