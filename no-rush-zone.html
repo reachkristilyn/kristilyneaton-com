@@ -13,6 +13,7 @@
     --forest:#234b38;
     --forest-deep:#152e21;
     --blush:#e9b9ac;
+    --midblush: #f5ddd6;
     --blush-soft:#f7ebe6;
     --cream:#faf7f2;
     --ink:#1d1f1c;
@@ -48,13 +49,13 @@
   .header-inner{max-width:1060px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between}
   .eyebrow{
     font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--blush);font-weight:600;margin-bottom:.35rem;
+    color:var(--midblush);font-weight:600;margin-bottom:.35rem;
   }
   h1{font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.1}
   .header-date{font-size:.95rem;color:#cfe0d5}
   .streak-pill{
     background:var(--forest-deep);border:1px solid rgba(233,185,172,.35);
-    color:var(--blush);padding:.5rem .9rem;border-radius:999px;
+    color:var(--midblush);padding:.5rem .9rem;border-radius:999px;
     font-size:.82rem;font-weight:600;white-space:nowrap;
   }
 
@@ -67,7 +68,7 @@
   }
   .card h2{font-size:1.35rem;margin-bottom:.9rem;color:var(--forest)}
   .span-2{grid-column:1 / -1}
-  .hint{font-size:.8rem;color:#6f7a72}
+  .hint{font-size:.8rem;color:#4a534d}
 
   /* ---------- Capture bar ---------- */
   .capture{display:flex;gap:.6rem}
@@ -95,16 +96,16 @@
     background:var(--cream);border:1px solid var(--line);border-radius:10px;
   }
   .task.starred{border-color:var(--blush);background:var(--blush-soft)}
-  .task.done .task-text{text-decoration:line-through;color:#8b948d}
+  .task.done .task-text{text-decoration:line-through;color:#4a534d}
   .task input[type=checkbox]{width:1.2rem;height:1.2rem;accent-color:var(--forest);flex-shrink:0}
   .task-text{flex:1;font-size:.95rem;word-break:break-word}
   .icon-btn{
     background:none;border:none;font-size:1rem;line-height:1;padding:.3rem;
-    color:#9aa39c;border-radius:6px;flex-shrink:0;
+    color:#4a534d;border-radius:6px;flex-shrink:0;
   }
   .icon-btn:hover{color:var(--forest)}
-  .icon-btn.on{color:#c98a2e}
-  .empty{padding:1.2rem;text-align:center;color:#8b948d;font-size:.9rem;background:var(--cream);border:1.5px dashed var(--line);border-radius:10px;margin-top:1rem}
+  .icon-btn.on{color:#6e4608}
+  .empty{padding:1.2rem;text-align:center;color:#4a534d;font-size:.9rem;background:var(--cream);border:1.5px dashed var(--line);border-radius:10px;margin-top:1rem}
 
   /* ---------- Timer ---------- */
   .timer-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem}
@@ -116,22 +117,22 @@
     position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   }
   .ring-time{font-family:'DM Serif Display',Georgia,serif;font-size:2.4rem;color:var(--forest)}
-  .ring-mode{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#6f7a72;font-weight:600}
+  .ring-mode{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#4a534d;font-weight:600}
   .timer-controls{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
-  .sessions{font-size:.85rem;color:#6f7a72}
+  .sessions{font-size:.85rem;color:#4a534d}
   .sessions strong{color:var(--forest)}
 
   /* ---------- Energy ---------- */
   .energy-row{display:flex;gap:.5rem;margin-bottom:1rem}
   .energy-btn{
     flex:1;padding:.7rem 0;border:1.5px solid var(--line);background:var(--cream);
-    border-radius:10px;font-size:1.05rem;font-weight:600;color:#6f7a72;
+    border-radius:10px;font-size:1.05rem;font-weight:600;color:#4a534d;
   }
   .energy-btn[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:var(--white)}
   .spark{display:flex;align-items:flex-end;gap:4px;height:56px;margin-top:.4rem}
   .spark-bar{flex:1;background:var(--blush);border-radius:3px 3px 0 0;min-height:4px}
   .spark-bar.today-bar{background:var(--forest)}
-  .spark-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#9aa39c;margin-top:.3rem}
+  .spark-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#4a534d;margin-top:.3rem}
 
   /* ---------- Habits ---------- */
   .habit-row{
@@ -156,7 +157,7 @@
 
   /* ---------- Footer / data ---------- */
   .data-bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:.4rem}
-  footer{max-width:1060px;margin:0 auto;padding:0 1.5rem 3rem;font-size:.8rem;color:#8b948d}
+  footer{max-width:1060px;margin:0 auto;padding:0 1.5rem 3rem;font-size:.8rem;color:#4a534d}
 
   .visually-hidden{
     position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;
@@ -192,6 +193,7 @@
     </div>
     <ul class="tasks" id="task-list"></ul>
     <div class="empty" id="task-empty">Nothing captured yet. That is either impressive or suspicious.</div>
+    <p class="hint" role="status" id="task-msg" style="margin-top:.7rem;min-height:1.2em"></p>
     <p class="hint" style="margin-top:.7rem">Star up to three tasks to mark today's priorities. Starred tasks float to the top.</p>
   </section>
 
@@ -230,8 +232,13 @@
       <button class="energy-btn" data-level="4" aria-pressed="false">4</button>
       <button class="energy-btn" data-level="5" aria-pressed="false">5</button>
     </div>
-    <div class="spark" id="spark" aria-label="Energy over the last 14 days" role="img"></div>
-    <div class="spark-labels"><span>14 days ago</span><span>today</span></div>
+    <div class="spark" id="spark" aria-hidden="true"></div>
+    <div class="spark-labels" aria-hidden="true"><span>14 days ago</span><span>today</span></div>
+    <table class="visually-hidden" id="spark-table">
+      <caption>Energy ratings, last 14 days</caption>
+      <thead><tr><th scope="col">Date</th><th scope="col">Rating</th></tr></thead>
+      <tbody></tbody>
+    </table>
   </section>
 
   <!-- Habits -->
@@ -342,7 +349,13 @@
       var span = document.createElement("span");
       span.className = "task-text";
       span.textContent = t.text;
-
+      if(t.starred){
+        var flag = document.createElement("span");
+        flag.className = "visually-hidden";
+        flag.textContent = " (priority)";
+        span.appendChild(flag);
+      }
+      
       var star = document.createElement("button");
       star.className = "icon-btn" + (t.starred ? " on" : "");
       star.textContent = t.starred ? "\u2605" : "\u2606";
@@ -350,7 +363,12 @@
       star.addEventListener("click", function(){
         if(!t.starred){
           var count = state.tasks.filter(function(x){ return x.starred && !x.done; }).length;
-          if(count >= 3){ alert("Three priorities max. Unstar one first."); return; }
+          if(count >= 3){
+            var msg = document.getElementById("task-msg");
+            msg.textContent = "Three priorities max. Unstar one first.";
+            setTimeout(function(){ msg.textContent = ""; }, 4000);
+            return;
+          }        
         }
         t.starred = !t.starred; save(); renderTasks();
       });
@@ -470,16 +488,31 @@
     energyBtns.forEach(function(b){
       b.setAttribute("aria-pressed", String(Number(b.dataset.level) === today));
     });
+    
     var spark = document.getElementById("spark");
     spark.innerHTML = "";
+    var tbody = document.querySelector("#spark-table tbody");
+    tbody.innerHTML = "";
+        
     for(var i = 13; i >= 0; i--){
       var d = new Date(); d.setDate(d.getDate() - i);
       var v = state.energy[todayKey(d)] || 0;
       var bar = document.createElement("div");
       bar.className = "spark-bar" + (i === 0 ? " today-bar" : "");
       bar.style.height = v ? (v * 20) + "%" : "4px";
+      
       bar.title = todayKey(d) + (v ? ": " + v + "/5" : ": no entry");
       spark.appendChild(bar);
+
+      var tr = document.createElement("tr");
+      var th = document.createElement("th");
+      th.scope = "row";
+      th.textContent = new Date(d).toLocaleDateString(undefined, { weekday:"short", month:"short", day:"numeric" });
+      var td = document.createElement("td");
+      td.textContent = v ? v + " out of 5" : "No entry";
+      tr.appendChild(th); tr.appendChild(td);
+      tbody.appendChild(tr);
+    }    
     }
   }
   energyBtns.forEach(function(b){
