@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<title>Ten Elevens | Kristi Lyn Eaton</title>
+<title>Eleven Elevens | Kristi Lyn Eaton</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -169,7 +169,7 @@
 <header>
   <div class="header-inner">
     <div>
-      <p class="eyebrow">ten elevens, a private daily tracker</p>
+      <p class="eyebrow">eleven elevens, a private daily tracker</p>
       <h1 id="greeting">Today</h1>
       <p class="header-date" id="header-date"></p>
       <nav class="day-nav" aria-label="Choose a day">
@@ -178,7 +178,7 @@
         <button class="btn-ghost" id="next-day">Next weekday</button>
       </nav>
     </div>
-    <div class="streak-pill" id="day-pill" aria-live="polite">0 of 10 done</div>
+    <div class="streak-pill" id="day-pill" aria-live="polite">0 of 11 done</div>
   </div>
 </header>
 
@@ -187,7 +187,7 @@
   <!-- Activities -->
   <section class="card acts-card" id="acts-card" aria-labelledby="acts-h">
     <div class="card-head">
-      <h2 id="acts-h">Today's ten</h2>
+      <h2 id="acts-h">Today's eleven</h2>
       <button class="btn-soft" id="off-btn" aria-pressed="false">Mark as day off</button>
     </div>
     <p class="hint" id="day-msg" role="status"></p>
@@ -230,7 +230,7 @@
     <div class="bar" aria-hidden="true"><span id="all-bar"></span></div>
     <div class="stats">
       <div class="stat"><div class="stat-num" id="st-time">0h</div><div class="stat-label">Time logged</div></div>
-      <div class="stat"><div class="stat-num" id="st-full">0</div><div class="stat-label">Full 10 of 10 days</div></div>
+      <div class="stat"><div class="stat-num" id="st-full">0</div><div class="stat-label">Full 11 of 11 days</div></div>
       <div class="stat"><div class="stat-num" id="st-streak">0</div><div class="stat-label">Full-day streak</div></div>
       <div class="stat"><div class="stat-num" id="st-left">0</div><div class="stat-label">Weekdays left, incl. today</div></div>
     </div>
@@ -249,8 +249,8 @@
       <span><i class="sw"></i>0</span>
       <span><i class="sw" style="background:var(--nrz-blush-soft);border-color:var(--nrz-blush)"></i>1 to 3</span>
       <span><i class="sw" style="background:var(--nrz-blush)"></i>4 to 6</span>
-      <span><i class="sw" style="background:var(--nrz-sage)"></i>7 to 9</span>
-      <span><i class="sw" style="background:var(--nrz-forest)"></i>10</span>
+      <span><i class="sw" style="background:var(--nrz-sage)"></i>7 to 10</span>
+      <span><i class="sw" style="background:var(--nrz-forest)"></i>11</span>
     </div>
   </section>
 
@@ -275,13 +275,13 @@
 </main>
 
 <footer>
-  <p>ten elevens, private and unlinked</p>
+  <p>eleven elevens, private and unlinked</p>
 </footer>
 
 <script>
 (function(){
   "use strict";
-  var KEY = "kle-ten-elevens-v1";
+  var KEY = "kle-eleven-elevens-v1";
   var BASE_TITLE = document.title;
   var START = new Date(2026, 9, 8);
   var END = new Date(2026, 11, 31);
@@ -301,8 +301,13 @@
     { id:"writing", name:"Writing focus", group:"rotate",
       options:["Squirrel Book","Power Up","Novel"], cycle:["Squirrel Book","Power Up","Novel"], detail:[] },
     { id:"project", name:"Project focus", group:"rotate",
-      options:["Beaker","The Unmapped","Unfinished task","Other personal project"], cycle:["Beaker","The Unmapped","Unfinished task"], detail:["Unfinished task","Other personal project"] }
-  ];
+      options:["Beaker","The Unmapped","Unfinished task","Other personal project"], cycle:["Beaker","The Unmapped","Unfinished task"], 
+      detail:["Unfinished task","Other personal project"] },
+          { id:"extra", name:"Write-in", group:"rotate", writein:true }
+
+    ];
+
+  var GOAL = ACTS.length;
 
   /* ---------- Dates ---------- */
   function key(d){
@@ -378,7 +383,7 @@
     document.getElementById("header-date").textContent =
       fromKey(selected).toLocaleDateString(undefined, { weekday:"long", month:"long", day:"numeric", year:"numeric" }) +
       (selected === todayK ? " (today)" : "");
-    document.getElementById("day-pill").textContent = isOff(selected) ? "Day off" : doneCount(selected) + " of 10 done";
+    document.getElementById("day-pill").textContent = isOff(selected) ? "Day off" : doneCount(selected) + " of 11 done";
     prevBtn.disabled = i <= 0;
     nextBtn.disabled = i >= WEEKDAYS.length - 1;
     todayBtn.disabled = selected === latestWeekday();
@@ -446,7 +451,18 @@
         tools.appendChild(det);
       }
     }
+
+    if(a.writein){
+      var wi = document.createElement("input");
+      wi.type = "text"; wi.id = "det-" + a.id; wi.placeholder = "What is it today?";
+      wi.setAttribute("aria-label", "Write-in activity for this day");
+      var ow = state.days[selected];
+      wi.value = (ow && ow.details && ow.details[a.id]) || "";
+      wi.addEventListener("input", function(){ day(selected).details[a.id] = wi.value; save(); });
+      tools.appendChild(wi);
+    }
     var sb = document.createElement("button");
+
     sb.className = "btn-soft start-btn"; sb.id = "start-" + a.id; sb.disabled = off;
     sb.textContent = active ? (timer.running ? "Running" : "Resume") : "Start 11:00";
     sb.setAttribute("aria-label", (active && !timer.running ? "Resume" : "Start") + " 11 minute timer for " + a.name);
@@ -458,8 +474,8 @@
 
   function renderActs(){
     var off = isOff(selected);
-    document.getElementById("acts-h").textContent = selected === todayK ? "Today's ten" :
-      fromKey(selected).toLocaleDateString(undefined, { weekday:"long" }) + "'s ten";
+    document.getElementById("acts-h").textContent = selected === todayK ? "Today's eleven" :
+      fromKey(selected).toLocaleDateString(undefined, { weekday:"long" }) + "'s eleven";
     offBtn.setAttribute("aria-pressed", String(off));
     offBtn.textContent = off ? "Day off (undo)" : "Mark as day off";
     actsCard.classList.toggle("off", off);
@@ -490,7 +506,7 @@
     if(left === undefined) left = currentLeft();
     document.getElementById("ring-time").textContent = fmt(left);
     ring.style.strokeDashoffset = circ * (1 - left / DUR);
-    if(timer.running) document.title = fmt(left) + " " + actById(timer.actId).name + " | Ten Elevens";
+    if(timer.running) document.title = fmt(left) + " " + actById(timer.actId).name + " | Eleven Elevens";
   }
   function renderTimer(){
     var a = timer.actId ? actById(timer.actId) : null;
@@ -567,14 +583,14 @@
     var n = doneCount(selected);
     document.getElementById("day-bar-label").innerHTML = "";
     var dl = document.getElementById("day-bar-label");
-    var s1 = document.createElement("strong"); s1.textContent = isOff(selected) ? "Day off" : n + " of 10";
+    var s1 = document.createElement("strong"); s1.textContent = isOff(selected) ? "Day off" : n + " of " + GOAL;
     dl.appendChild(s1); dl.appendChild(document.createTextNode(" on " + longDate(selected)));
-    document.getElementById("day-bar").style.width = (isOff(selected) ? 0 : n * 10) + "%";
+    document.getElementById("day-bar").style.width = (isOff(selected) ? 0 : n / GOAL * 100) + "%"
 
     var active = WEEKDAYS.filter(function(k){ return !isOff(k); });
     var total = 0, full = 0;
-    active.forEach(function(k){ var c = doneCount(k); total += c; if(c >= 10) full++; });
-    var target = active.length * 10;
+    active.forEach(function(k){ var c = doneCount(k); total += c; if(c >= GOAL) full++; });
+    var target = active.length * GOAL;
     var al = document.getElementById("all-bar-label");
     al.innerHTML = "";
     var s2 = document.createElement("strong"); s2.textContent = total + " of " + target;
@@ -590,8 +606,8 @@
     var streak = 0;
     for(var i = past.length - 1; i >= 0; i--){
       var c = doneCount(past[i]);
-      if(past[i] === todayK && c < 10) continue;
-      if(c >= 10) streak++; else break;
+      if(past[i] === todayK && c < GOAL) continue;
+      if(c >= GOAL) streak++; else break;
     }
     document.getElementById("st-streak").textContent = streak + (streak === 1 ? " day" : " days");
     document.getElementById("st-left").textContent = active.filter(function(k){ return k >= todayK; }).length;
@@ -624,13 +640,13 @@
   function calButton(k){
     var b = document.createElement("button");
     var off = isOff(k), n = doneCount(k);
-    var lv = n === 0 ? 0 : n <= 3 ? 1 : n <= 6 ? 2 : n <= 9 ? 3 : 4;
+    var lv = n === 0 ? 0 : n <= 3 ? 1 : n <= 6 ? 2 : n <= GOAL ? 3 : 4;
     b.id = "cal-" + k;
     b.className = "cal-cell" + (off ? " off" : " lv" + lv) + (k > todayK && !n ? " future" : "") +
       (k === todayK ? " today" : "") + (k === selected ? " selected" : "");
     b.textContent = off ? "off" : String(n);
     if(k === todayK) b.setAttribute("aria-current", "date");
-    b.setAttribute("aria-label", longDate(k) + ": " + (off ? "day off" : n + " of 10") +
+    b.setAttribute("aria-label", longDate(k) + ": " + (off ? "day off" : n + " of " + GOAL) +
       (k === todayK ? ", today" : "") + (k === selected ? ", showing" : ""));
     b.addEventListener("click", function(){ selected = k; renderAll(); });
     return b;
@@ -686,7 +702,7 @@
     var blob = new Blob([JSON.stringify(state, null, 2)], { type:"application/json" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "ten-elevens-backup-" + todayK + ".json";
+    a.download = "eleven-elevens-backup-" + todayK + ".json";
     a.click();
     URL.revokeObjectURL(a.href);
   });
@@ -704,7 +720,7 @@
         save(); renderAll();
         alert("Backup imported.");
       }catch(e){
-        alert("That file could not be read as a Ten Elevens backup.");
+        alert("That file could not be read as an Eleven Elevens backup.");
       }
     };
     reader.readAsText(f);
